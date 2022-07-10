@@ -12,9 +12,7 @@ public:
         vector<int> ans(k,0);
         int count = 0;
         int prev = v1[0];
-        cout << "v1 --> ";
         for(int i = 0; i < (int)v1.size(); i++){
-            cout << v1[i] << " ";
             if(prev == v1[i]){
                 count++;
             }
@@ -24,7 +22,6 @@ public:
                 prev = v1[i];
             }
         }
-        cout << endl;
         ans[count - 1]++;
         return ans;
     }
