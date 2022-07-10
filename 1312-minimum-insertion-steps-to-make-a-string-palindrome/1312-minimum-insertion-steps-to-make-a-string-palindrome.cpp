@@ -20,8 +20,6 @@ public:
         int n = s.length();
         dp.resize(n + 1, vector<int>(n + 1, -1));
         int lis = helper(0, n - 1);
-        cout << "lis: " << lis << endl;
-        
         return (n - lis);
     }
 };
