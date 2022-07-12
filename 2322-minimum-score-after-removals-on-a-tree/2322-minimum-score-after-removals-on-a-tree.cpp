@@ -1,23 +1,15 @@
 class Solution {
 public:
+    int timer, n, l;
     vector<vector<int>> adj;
-    vector<int> subXOR;
-    vector<int> parent;
-    vector<int> val;
-    int n, l;
-    
-    int timer;
-    vector<int> tin, tout;
-    
+    vector<int> tin, tout,parent,subXOR,val;
     void dfs(int v, int p){
         tin[v] = ++timer;
         for (int u : adj[v]) {
-            if (u != p)
-                dfs(u, v);
+            if (u != p) dfs(u, v);
         }
         tout[v] = ++timer;
     }
-
     void preprocess(int root) {
         tin.resize(n + 1);
         tout.resize(n + 1);
@@ -25,7 +17,6 @@ public:
         l = ceil(log2(n));
         dfs(root, root);
     }
-    
     void dfs1(int node, int par){
         subXOR[node] = val[node];
         for(auto x : adj[node]){
@@ -35,7 +26,6 @@ public:
             subXOR[node] = (subXOR[node] ^ subXOR[x]);
         }
     }
-    
     int minimumScore(vector<int>& nums, vector<vector<int>>& edges) {
         n = nums.size();
         val = nums;
@@ -55,44 +45,23 @@ public:
                 int node1 = edges[i][0];
                 int node2 = edges[i][1];
                 if(parent[node1] == node2) swap(node1, node2);
-                
                 int node3 = edges[j][0];
                 int node4 = edges[j][1];
                 if(parent[node3] == node4) swap(node3,node4);
-                
-                
                 if(tin[node4] <= tin[node2] && tout[node4] >= tout[node2]){
                     swap(node1, node3);
                     swap(node2, node4);
                 }
-                
-
-//                 cout << "node1: " << node1 << endl;
-//                 cout << "node2: " << node2 << endl;
-//                 cout << "node3: " << node3 << endl;
-//                 cout << "node4: " << node4 << endl;
-                
                 if(tin[node2] <= tin[node4] && tout[node2] >= tout[node4]){
-                    // cout << "ancestor!" << endl;
                     val1 = (subXOR[node2] ^ subXOR[node4]);
                     val2 = subXOR[node4];
                     val3 = (subXOR[0] ^ val1 ^ val2);
-                    // cout << "val1: " << val1 << endl;
-                    // cout << "val2: " << val2 << endl;
-                    // cout << "val3: " << val3 << endl;
                 }
                 else{
-                    // cout << "NOT ancestor!" << endl;
                     val1 = subXOR[node2];
                     val2 = subXOR[node4];
                     val3 = (subXOR[0] ^ val1 ^ val2);
-                    // cout << "val1: " << val1 << endl;
-                    // cout << "val2: " << val2 << endl;
-                    // cout << "val3: " << val3 << endl;
                 }
-                
-                // cout << endl;
-                
                 minm = min(minm, max({val1,val2,val3}) - min({val1, val2, val3}));
             }
         }
