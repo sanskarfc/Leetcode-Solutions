@@ -3,7 +3,7 @@ public:
     long long countExcellentPairs(vector<int>& nums, int k) {
         int n = nums.size();
         vector<int> bits;
-        set<int> s1;
+        unordered_set<int> s1;
         for(int i = 0; i < n; i++){
             int count = 0;
             bool yo = false;
