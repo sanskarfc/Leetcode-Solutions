@@ -16,7 +16,6 @@ public:
         int m = nums2.size();
         dp.resize(n + 1, vector<int>(m + 1, INT_MIN));
         int ans = helper(n - 1,m - 1);
-        cout << "ans: " << ans << endl;
         if(ans == 0){
             int maxm = INT_MIN;
             for(int i = 0; i < n; i++){
